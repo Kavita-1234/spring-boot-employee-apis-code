@@ -1,7 +1,7 @@
 This is spring boot project for employee management.
 It provides Restful APIs to perform CRUD operation and filtering.
 ###Create new employee
-**URL:** http://localhost:8080/emp-data/create-emp
+**Endpoint:** emp-data/create-emp
 **Method:** POST
 **RequestBody:** JSON
 ```json
@@ -11,51 +11,124 @@ It provides Restful APIs to perform CRUD operation and filtering.
   "salary": 45000
 }
 ``` 
-**Description:** This api is used to save new employee details in database.Employee details like: name, role, salary.
+**Description:** Creates a new employee record and saves it to the database.
 
 ###Get employee details
-**URL:** http://localhost:8080/emp-data/get-emp
+**Endpoint:** emp-data/get-emp
 **Method:** GET
-**Description:** This api is used to return all employees detail.
+**Response:**
+```json
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "role": "Developer",
+    "salary": 45000
+  },
+  {
+    "id": 2,
+    "name": "Alice",
+    "role": "Manager",
+    "salary": 60000
+  }
+]
+```
+**Description:** Return a list of all employees from the database.
 
 ###Update employee
-**URL:** http://localhost:8080/emp-data/update-emp/1
+**Endpoint:** emp-data/update-emp/1
 **Method:** PUT
-**Description:** This api is used to update employee detail by id.
+**Request Body:**
+```json
+{
+  "name": "Alice Smith",
+  "role": "Manager",
+  "salary": 70000
+}
+```
+**Description:** Updates an existing employee’s details by ID.
 
 ###Delete employee
-**URL:** http://localhost:8080/emp-data/delete-emp/1
+**Endpoint:** emp-data/delete-emp/1
 **Method:** DELETE
-**Description:** This api is used to delete employee details by id.
+**Response:** 
+```json
+{
+  "message": "Employee with ID 1 deleted successfully"
+}
+```
+**Description:** Delete an employee record by ID.
 
 ###Get salary by Stream API filter 
-**URL:** http://localhost:8080/emp-data/stream-filter-salary?minSalary=40000&maxSalary=70000
+**Endpoint:** emp-data/stream-filter-salary?minSalary=40000&maxSalary=70000
 **Method:** GET
-**Description:** This api return all employee whoes salaries fall **within the given range.**
--Pass 'minSalary' and 'maxSalary' as query parameter.
--Stream Api filter used.
+**Response:**
+```json
+[
+  {
+    "id": 2,
+    "name": "Alice",
+    "role": "Manager",
+    "salary": 60000
+  }
+]
+```
+**Example:**'minSalary=20000' and 'maxSalary=70000'.
+**Description:** Fetches employees whose salaries fall within the given range using Stream API.
 
 ###Get name by Stream API filter
-**URL:** http://localhost:8080/emp-data/stream-filter-name?name=K
+**Endpoint:** emp-data/stream-filter-name?name=K
 **Method:** GET
-**Description:** This api return all employee details whoes name **start with the given character.**
-Example:
--If pass 'name=k' it will return all employee details whoes name start with **k**.
--Stream Api filter used.
+**Response:** 
+```json
+[
+  {
+    "id": 3,
+    "name": "Kavita",
+    "role": "Tester",
+    "salary": 35000
+  }
+]
+```
+**Example:** If pass 'name=K' it will return all employee details whoes name start with **K**.
+**Description:** Fetches employees whose names start with the given character using Stream API.
+
 
 ###Get name by Jpa repository filter
-**URL:** http://localhost:8080/emp-data/jpa-repo-name?name=K
+**Endpoint:** emp-data/jpa-repo-name?name=V
 **Method:** GET
-**Description:** This api return all employee details whoes name **start with the given character.**
-Example:
+**Response:**
+```json
+[
+  {
+    "id": 4,
+    "name": "Vikram",
+    "role": "Developer",
+    "salary": 50000
+  }
+]
+```
+
+**Description:** Fetches employees whose names start with the given character using JPA Repository.
+**Example:**
 -If pass 'name=V' it will return all employee details whoes name start with **V**.
--Jpa Repository used to apply filter.
 
 ###Get salary by jpa repository filter
-**URL:** http://localhost:8080/emp-data/jpa-repo-salary?minSalary=35000&maxSalary=50000
+**Endpoint:** emp-data/jpa-repo-salary?minSalary=35000&maxSalary=50000
 **Method:** GET
-**Description:** This api return all employee salaries fall **within the given range.**
+**Response:**
+```json
+[
+  {
+    "id": 5,
+    "name": "Ravi",
+    "role": "HR",
+    "salary": 40000
+  }
+]
+```
+**Description:** Fetches employees whose salaries fall within the given range using JPA Repository.
 -Pass 'minSalary' and 'maxSalary' as query parameter.
--Jpa Repository used to apply filter.
+**Example:** 'minSalary=5000' and 'maxSalary=40000'.
 
 
