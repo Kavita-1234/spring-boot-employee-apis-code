@@ -6,7 +6,7 @@ It provides Restful APIs to perform CRUD operation and filtering.
 **RequestBody:** JSON
 ```json
 {
-  "name": "Jhon Doe",
+  "name": "John Doe",
   "role": "Developer",
   "salary": 45000
 }
@@ -51,7 +51,7 @@ It provides Restful APIs to perform CRUD operation and filtering.
 ###Delete employee
 **Endpoint:** emp-data/delete-emp/1
 **Method:** DELETE
-**Response:** 
+**Response:**
 ```json
 {
   "message": "Employee with ID 1 deleted successfully"
@@ -59,7 +59,7 @@ It provides Restful APIs to perform CRUD operation and filtering.
 ```
 **Description:** Delete an employee record by ID.
 
-###Get salary by Stream API filter 
+###Get employee salary by Stream API filter
 **Endpoint:** emp-data/stream-filter-salary?minSalary=40000&maxSalary=70000
 **Method:** GET
 **Response:**
@@ -76,10 +76,10 @@ It provides Restful APIs to perform CRUD operation and filtering.
 **Example:**'minSalary=20000' and 'maxSalary=70000'.
 **Description:** Fetches employees whose salaries fall within the given range using Stream API.
 
-###Get name by Stream API filter
+###Get employee name by Stream API filter
 **Endpoint:** emp-data/stream-filter-name?name=K
 **Method:** GET
-**Response:** 
+**Response:**
 ```json
 [
   {
@@ -94,7 +94,7 @@ It provides Restful APIs to perform CRUD operation and filtering.
 **Description:** Fetches employees whose names start with the given character using Stream API.
 
 
-###Get name by Jpa repository filter
+###Get employee name by Jpa repository filter
 **Endpoint:** emp-data/jpa-repo-name?name=V
 **Method:** GET
 **Response:**
@@ -108,10 +108,9 @@ It provides Restful APIs to perform CRUD operation and filtering.
   }
 ]
 ```
-
-**Description:** Fetches employees whose names start with the given character using JPA Repository.
 **Example:**
 -If pass 'name=V' it will return all employee details whoes name start with **V**.
+**Description:** Fetches employees whose names start with the given character using JPA Repository.
 
 ###Get salary by jpa repository filter
 **Endpoint:** emp-data/jpa-repo-salary?minSalary=35000&maxSalary=50000
@@ -127,8 +126,7 @@ It provides Restful APIs to perform CRUD operation and filtering.
   }
 ]
 ```
+**Example:** 'minSalary=5000' and 'maxSalary=40000'.
 **Description:** Fetches employees whose salaries fall within the given range using JPA Repository.
 -Pass 'minSalary' and 'maxSalary' as query parameter.
-**Example:** 'minSalary=5000' and 'maxSalary=40000'.
-
 
