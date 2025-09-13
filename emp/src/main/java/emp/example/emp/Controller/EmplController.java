@@ -2,17 +2,9 @@ package emp.example.emp.Controller;
 
 import java.util.List;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import emp.example.emp.Entity.Empl;
 import emp.example.emp.Service.EmplService;
@@ -29,61 +21,99 @@ public class EmplController {
 
     // Create
     @PostMapping("/create-emp")
-    public List<Empl> createEmpl(@RequestBody List<Empl> empl) {
-    	return emplService.createEmpl(empl);
-        
+    public ResponseEntity<?> createEmpl(@RequestBody List<Empl> empl) {
+        try {
+            return ResponseEntity.ok(emplService.createEmpl(empl));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error while creating employee: " + e.getMessage());
+        }
     }
 
     // Read
     @GetMapping("/get-emp")
-    public ResponseEntity<List<Empl>> getEmpl() {
-        System.out.println("Get all employees details.");
-        return ResponseEntity.ok(emplService.getEmpl());
+    public ResponseEntity<?> getEmpl() {
+        try {
+            System.out.println("Get all employees details.");
+            return ResponseEntity.ok(emplService.getEmpl());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error while fetching employees: " + e.getMessage());
+        }
     }
-    
 
     // Update
     @PutMapping("/update-emp/{id}")
-    public ResponseEntity<Empl> updateEmpl(@PathVariable Long id, @RequestBody Empl empl) {
-        Empl updatedEmpl = emplService.updateEmpl(id, empl);
-        return ResponseEntity.ok(updatedEmpl);
+    public ResponseEntity<?> updateEmpl(@PathVariable Long id, @RequestBody Empl empl) {
+        try {
+            Empl updatedEmpl = emplService.updateEmpl(id, empl);
+            return ResponseEntity.ok(updatedEmpl);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error while updating employee: " + e.getMessage());
+        }
     }
 
-    // Delete employee details
+    // Delete
     @DeleteMapping("/delete-emp/{id}")
-    public ResponseEntity<String> deleteEmpl(@PathVariable long id) {
-        emplService.deleteEmpl(id);
-        return ResponseEntity.ok("Employee details deleted successfully with id: " + id);
+    public ResponseEntity<?> deleteEmpl(@PathVariable long id) {
+        try {
+            emplService.deleteEmpl(id);
+            return ResponseEntity.ok("Employee details deleted successfully with id: " + id);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error while deleting employee: " + e.getMessage());
+        }
     }
-    
-    // Find name by stream api filter
+
+    // Find by name (stream filter)
     @GetMapping("/stream-filter-name")
-    public ResponseEntity<List<Empl>> findByName(
-    		@RequestParam(required = false) String name){
-    	return ResponseEntity.ok(emplService.findByName(name));
+    public ResponseEntity<?> findByName(@RequestParam(required = false) String name) {
+        try {
+            System.out.println("Get employees details by apply stream api filter");
+            return ResponseEntity.ok(emplService.findByName(name));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error while filtering by name: " + e.getMessage());
+        }
     }
-   
-    //Find salary by stream api filter
+
+    // Find by salary (stream filter)
     @GetMapping("/stream-filter-salary")
-    public ResponseEntity<List<Empl>> findByStreamSalary(
-    		@RequestParam(required = false) Integer minSalary,
-    		@RequestParam(required = false) Integer maxSalary){
-    	return ResponseEntity.ok(emplService.findByStreamSalary(minSalary, maxSalary));
+    public ResponseEntity<?> findByStreamSalary(
+            @RequestParam(required = false) Integer minSalary,
+            @RequestParam(required = false) Integer maxSalary) {
+        try {
+            return ResponseEntity.ok(emplService.findByStreamSalary(minSalary, maxSalary));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error while filtering by salary: " + e.getMessage());
+        }
     }
-    
-    // find name by jpa repository 
+
+    // Find by name (JPA repository)
     @GetMapping("/jpa-repo-name")
-    public ResponseEntity<List<Empl>> findByJpaRepoName(
-    		@RequestParam(required = false) String name){
-    	return ResponseEntity.ok(emplService.findByJpaRepoName(name));
+    public ResponseEntity<?> findByJpaRepoName(@RequestParam(required = false) String name) {
+        try {
+            System.out.println("Get employees name by apply jpa repository filter");
+            return ResponseEntity.ok(emplService.findByJpaRepoName(name));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error while fetching name by JPA repo: " + e.getMessage());
+        }
     }
-    
-    //find salary by jpa repository
+
+    // Find by salary (JPA repository)
     @GetMapping("/jpa-repo-salary")
-    public ResponseEntity<List<Empl>> findByJpaRepoSalary(
-    		@RequestParam(required = false) Integer minSalary,
-    		@RequestParam(required = false) Integer maxSalary){
-    	return ResponseEntity.ok(emplService.findByJpaRepoSalary(minSalary, maxSalary));
+    public ResponseEntity<?> findByJpaRepoSalary(
+            @RequestParam(required = false) Integer minSalary,
+            @RequestParam(required = false) Integer maxSalary) {
+        try {
+            System.out.println("Get employees salary by apply jpa repository filter");
+            return ResponseEntity.ok(emplService.findByJpaRepoSalary(minSalary, maxSalary));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error while fetching salary by JPA repo: " + e.getMessage());
+        }
     }
-    
 }
