@@ -2,6 +2,7 @@ package emp.example.emp.Controller;
 
 import java.util.List;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +37,7 @@ public class EmplController {
     // Read
     @GetMapping("/get-emp")
     public ResponseEntity<List<Empl>> getEmpl() {
+        System.out.println("Get all employees details.");
         return ResponseEntity.ok(emplService.getEmpl());
     }
     
