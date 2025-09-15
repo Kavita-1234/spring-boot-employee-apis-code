@@ -30,8 +30,9 @@ public class EmplController {
     // Create
     @PostMapping("/create-emp")
     public List<Empl> createEmpl(@RequestBody List<Empl> empl) {
+        System.out.println("Employee details save successfully in database.");
     	return emplService.createEmpl(empl);
-        
+
     }
 
     // Read
@@ -40,7 +41,7 @@ public class EmplController {
         System.out.println("Get all employees details.");
         return ResponseEntity.ok(emplService.getEmpl());
     }
-    
+
 
     // Update
     @PutMapping("/update-emp/{id}")
@@ -56,7 +57,7 @@ public class EmplController {
         emplService.deleteEmpl(id);
         return ResponseEntity.ok("Employee details deleted successfully with id: " + id);
     }
-    
+
     // Find name by stream api filter
     @GetMapping("/stream-filter-name")
     public ResponseEntity<List<Empl>> findByName(
@@ -64,7 +65,7 @@ public class EmplController {
         System.out.println("Get employee name by stream api filter");
     	return ResponseEntity.ok(emplService.findByName(name));
     }
-   
+
     //Find salary by stream api filter
     @GetMapping("/stream-filter-salary")
     public ResponseEntity<List<Empl>> findByStreamSalary(
@@ -73,15 +74,15 @@ public class EmplController {
         System.out.println("Get employee salary by stream api filter");
     	return ResponseEntity.ok(emplService.findByStreamSalary(minSalary, maxSalary));
     }
-    
-    // find name by jpa repository 
+
+    // find name by jpa repository
     @GetMapping("/jpa-repo-name")
     public ResponseEntity<List<Empl>> findByJpaRepoName(
     		@RequestParam(required = false) String name){
         System.out.println("Get employee name by jpa repository");
     	return ResponseEntity.ok(emplService.findByJpaRepoName(name));
     }
-    
+
     //find salary by jpa repository
     @GetMapping("/jpa-repo-salary")
     public ResponseEntity<List<Empl>> findByJpaRepoSalary(
@@ -90,5 +91,5 @@ public class EmplController {
         System.out.println("Get employee salary by jpa repository");
     	return ResponseEntity.ok(emplService.findByJpaRepoSalary(minSalary, maxSalary));
     }
-    
+
 }
