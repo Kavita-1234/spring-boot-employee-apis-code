@@ -2,6 +2,7 @@ package emp.example.emp.Controller;
 
 import java.util.List;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +37,7 @@ public class EmplController {
     // Read
     @GetMapping("/get-emp")
     public ResponseEntity<List<Empl>> getEmpl() {
+        System.out.println("Get all employees details.");
         return ResponseEntity.ok(emplService.getEmpl());
     }
     
@@ -44,6 +46,7 @@ public class EmplController {
     @PutMapping("/update-emp/{id}")
     public ResponseEntity<Empl> updateEmpl(@PathVariable Long id, @RequestBody Empl empl) {
         Empl updatedEmpl = emplService.updateEmpl(id, empl);
+        System.out.println("Employee details update successfully");
         return ResponseEntity.ok(updatedEmpl);
     }
 
@@ -58,6 +61,7 @@ public class EmplController {
     @GetMapping("/stream-filter-name")
     public ResponseEntity<List<Empl>> findByName(
     		@RequestParam(required = false) String name){
+        System.out.println("Get employee name by stream api filter");
     	return ResponseEntity.ok(emplService.findByName(name));
     }
    
@@ -66,6 +70,7 @@ public class EmplController {
     public ResponseEntity<List<Empl>> findByStreamSalary(
     		@RequestParam(required = false) Integer minSalary,
     		@RequestParam(required = false) Integer maxSalary){
+        System.out.println("Get employee salary by stream api filter");
     	return ResponseEntity.ok(emplService.findByStreamSalary(minSalary, maxSalary));
     }
     
@@ -73,6 +78,7 @@ public class EmplController {
     @GetMapping("/jpa-repo-name")
     public ResponseEntity<List<Empl>> findByJpaRepoName(
     		@RequestParam(required = false) String name){
+        System.out.println("Get employee name by jpa repository");
     	return ResponseEntity.ok(emplService.findByJpaRepoName(name));
     }
     
@@ -81,6 +87,7 @@ public class EmplController {
     public ResponseEntity<List<Empl>> findByJpaRepoSalary(
     		@RequestParam(required = false) Integer minSalary,
     		@RequestParam(required = false) Integer maxSalary){
+        System.out.println("Get employee salary by jpa repository");
     	return ResponseEntity.ok(emplService.findByJpaRepoSalary(minSalary, maxSalary));
     }
     
